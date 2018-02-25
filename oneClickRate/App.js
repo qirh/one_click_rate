@@ -4,18 +4,26 @@ import { AppRegistry, Image, Button, Text, Alert, View, TouchableOpacity, ImageB
 
 export default class ratingApp extends Component {
 
+
   renderButton() {
     const buttons = [
-      {text: 'button 1', pic: './assets/star.png', action: () => console.log('pressed button 1')},
-      {text: 'button 2', pic: './assets/star.png', action: () => console.log('pressed button 2')},
-      {text: 'button 3', pic: './assets/star.png', action: () => console.log('pressed button 3')},
-      {text: 'button 4', pic: './assets/star.png', action: () => console.log('pressed button 4')},
-      {text: 'button 5', pic: './assets/star.png', action: () => console.log('pressed button 5')}
+      {text: 'button 1', pic: './assets/star.png', action: () => console.log('pressed button 0')},
+      {text: 'button 2', pic: './assets/star.png', action: () => console.log('pressed button 1')},
+      {text: 'button 3', pic: './assets/star.png', action: () => console.log('pressed button 2')},
+      {text: 'button 4', pic: './assets/star.png', action: () => console.log('pressed button 3')},
+      {text: 'button 5', pic: './assets/star.png', action: () => console.log('pressed button 4')}
     ];
     const renderedButtons =  buttons.map(b => {
       return <TouchableOpacity key={b.text} title={b.text} onPress={b.action}><Image source={require('./assets/star.png')} style={{height:60,width:60}}/></TouchableOpacity>;});
-
     return renderedButtons;
+  }
+  renderTitle(num) {
+    const renderedTitle = <View style={styles.header}><Text style={styles.headerText}>{shops[num].name}</Text></View>;
+    return renderedTitle;
+  }
+  renderPic(num) {
+    const renderedPic = <View style={{alignItems:"center"}}><Image style={styles.previewImg} source={shops[num].pic}/></View>;
+    return renderedPic;
   }
 
   render() {
@@ -23,12 +31,8 @@ export default class ratingApp extends Component {
     return (
       //Base Background
       <ImageBackground source={require("./assets/materialBack.jpg")} style={styles.background}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Store Name Here</Text>
-        </View>
-        <View style={{alignItems:"center"}}>
-          <Image source={require("./assets/placeholder.jpg")} style={styles.previewImg}/>
-        </View>
+        {this.renderTitle(1)}
+        {this.renderPic(1)}
         <View style={styles.stars}>
           {this.renderButton()}
         </View>
@@ -91,3 +95,11 @@ const styles = StyleSheet.create({
       width:60,
     },
 });
+
+const shops = [
+  {name: 'Walmart', pic: require("./assets/shops/walmart.jpg"), action: () => console.log('pressed shop 0')},
+  {name: 'HEB', pic: require("./assets/shops/heb.jpg"), action: () => console.log('pressed shop 1')},
+  {name: 'Trader Joe\'s', pic: require("./assets/shops/trader.jpg"), action: () => console.log('pressed shop 2')},
+  {name: '¡¡Wegmans!!', pic: require("./assets/shops/wegmans.jpg"), action: () => console.log('pressed shop 3')},
+  {name: 'Panda', pic: require("./assets/shops/panda.jpg"), action: () => console.log('pressed shop 4')}
+];
