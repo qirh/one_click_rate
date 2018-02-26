@@ -5,6 +5,14 @@ import { AppRegistry, Image, Button, Text, Alert, View, TouchableOpacity, ImageB
 export default class ratingApp extends Component {
 
 
+  constructor(){
+    super();
+    this.state = {
+      counter: 0,
+      num: 0
+    }
+  }
+
   renderButton() {
     const buttons = [
       {text: 'button 1', pic: './assets/star.png', action: () => console.log('pressed button 0')},
@@ -26,28 +34,29 @@ export default class ratingApp extends Component {
     return renderedPic;
   }
 
-  render() {
+  updateCounters(){
+    this.setState({counter: this.state.counter + 1,
+                    num: this.state.counter % 5});
+  }
 
+  render() {
+    var counter = 0;
+    var num = 0;
     return (
       //Base Background
       <ImageBackground source={require("./assets/materialBack.jpg")} style={styles.background}>
-        {this.renderTitle(1)}
-        {this.renderPic(1)}
+        {this.renderTitle(this.state.num)}
+        {this.renderPic(this.state.num)}
+
+        <TouchableOpacity title="Change Device Location" style={{flex:0,flexDirection:'row',justifyContent:'center'}} onPress={() =>
+          { console.log("here --> " + this.state.num);
+            this.updateCounters();
+          }
+        }><Image source={require('./assets/mapspic.png')} style={{height:50,width:50}}/></TouchableOpacity>
         <View style={styles.stars}>
           {this.renderButton()}
         </View>
-        <Button onPress={()=>{
-          RNGooglePlaces.openPlacePickerModal({
-            latitude: 53.544389,
-            longitude: -113.490927,
-            radius: 0.01 // 10 meters
-          })
-            .then((place) => {
-            console.log(place);
-            })
-            .catch(error => console.log(error.message));
-        }}
-        title="test"/>
+
       </ImageBackground>
     );
   }
@@ -100,6 +109,6 @@ const shops = [
   {name: 'Walmart', pic: require("./assets/shops/walmart.jpg"), action: () => console.log('pressed shop 0')},
   {name: 'HEB', pic: require("./assets/shops/heb.jpg"), action: () => console.log('pressed shop 1')},
   {name: 'Trader Joe\'s', pic: require("./assets/shops/trader.jpg"), action: () => console.log('pressed shop 2')},
-  {name: '¡¡Wegmans!!', pic: require("./assets/shops/wegmans.jpg"), action: () => console.log('pressed shop 3')},
-  {name: 'Panda', pic: require("./assets/shops/panda.jpg"), action: () => console.log('pressed shop 4')}
+  {name: 'Wegmans', pic: require("./assets/shops/wegmans.jpg"), action: () => console.log('pressed shop 3')},
+  {name: 'Hyper Panda', pic: require("./assets/shops/panda.jpg"), action: () => console.log('pressed shop 4')}
 ];
